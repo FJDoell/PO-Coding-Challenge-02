@@ -10,6 +10,7 @@ public class MergeLinkedListsService {
 	
 	public LinkedList<Integer> combineLists(List<LinkedList<Integer>> linkedList) {
 		LinkedList<Integer> result = new LinkedList<Integer>();
+		LinkedList<Integer> toRemove = null;
 		
 		int lowest = 0;
 		int lowestListIndex = 0;
@@ -20,17 +21,22 @@ public class MergeLinkedListsService {
 //				System.out.println(list);
 				// If list size is 0, remove it
 				if(list.size() <= 0) {
-					linkedList.remove(list);
+					toRemove = list;
 				} else if(lowest > list.get(0)) {
 					lowest = list.get(0);
 //					System.out.println("INDEX " + linkedList.indexOf(list));
 					lowestListIndex = linkedList.indexOf(list);
 				}
 			}
+			if(toRemove != null) {
+				linkedList.remove(toRemove);
+				toRemove = null;
+			} else {
+//				System.out.println(linkedList.get(lowestListIndex).get(0));
+				result.add(linkedList.get(lowestListIndex).removeFirst());
+			}
 			if(linkedList.size() == 0)
 				break;
-//			System.out.println(linkedList.get(lowestListIndex).get(0));
-			result.add(linkedList.get(lowestListIndex).removeFirst());
 		}
 		
 		return result;
