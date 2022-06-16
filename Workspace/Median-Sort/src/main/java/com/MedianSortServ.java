@@ -113,20 +113,17 @@ public class MedianSortServ {
 			
 			// Update left partition if necessary
 			if(getIndexVal(arr1, arr1LeftPartIndex) > arr2Next) {
-				System.out.println(getIndexVal(arr1, arr1LeftPartIndex) + " greater than " + arr2Next + ", moving back");
 				arr1LeftPartIndex--;
 				// Update the other partition.
-				arr2LeftPartIndex = onEachSide - arr1LeftPartIndex - 1;
+				arr2LeftPartIndex = onEachSide - arr1LeftPartIndex;
 			} else if(getIndexVal(arr2, arr2LeftPartIndex) > arr1Next) {
-				System.out.println(getIndexVal(arr2, arr2LeftPartIndex) + " greater than " + arr1Next + ", moving forward");
 				arr1LeftPartIndex++;
 				// Update the other partition.
-				arr2LeftPartIndex = onEachSide - arr1LeftPartIndex - 1;
+				arr2LeftPartIndex = onEachSide - arr1LeftPartIndex;
 			}
 			
 			// Check if we found the median
 			else if(getIndexVal(arr1, arr1LeftPartIndex) <= arr2Next && getIndexVal(arr2, arr2LeftPartIndex) <= arr1Next) {
-				System.out.println("Median found!");
 				partitionFound = true;
 				result = Math.min(getIndexVal(arr1, arr1LeftPartIndex), getIndexVal(arr2, arr2LeftPartIndex));
 				return result;

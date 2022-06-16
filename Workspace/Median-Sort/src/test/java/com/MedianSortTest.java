@@ -69,7 +69,6 @@ class MedianSortTest {
 		int[] nums1 = {1, 3};
 		int[] nums2 = {2};
 		
-		System.out.println("TEST BINARY ONE");
 		double result = serv.binaryFindMedian(nums1, nums2);
 		
 		assertEquals(2.0, result, "2.0 expected");
@@ -80,7 +79,6 @@ class MedianSortTest {
 		int[] nums1 = {1, 2};
 		int[] nums2 = {3, 4};
 
-		System.out.println("TEST BINARY TWO");
 		double result = serv.binaryFindMedian(nums1, nums2);
 		
 		assertEquals(2.5, result, "2.5 expected");
@@ -91,7 +89,6 @@ class MedianSortTest {
 		int[] nums1 = {1, 6, 8};
 		int[] nums2 = {3, 4};
 
-		System.out.println("TEST BINARY THREE");
 		double result = serv.binaryFindMedian(nums1, nums2);
 		
 		assertEquals(4.0, result, "4.0 expected");
@@ -107,9 +104,8 @@ class MedianSortTest {
 		for(int i = 1; i < nums2.length; i++)
 			nums2[i] = i+1000;
 
-		System.out.println("TEST BINARY LARGE");
 		double result = serv.binaryFindMedian(nums1, nums2);
-		assertEquals(998.5, result, "998.5 expected");
+		assertEquals(499.5, result, "499.5 expected");
 	}
 	
 	@Test
@@ -117,7 +113,6 @@ class MedianSortTest {
 		int[] nums1 = {};
 		int[] nums2 = {};
 
-		System.out.println("TEST BINARY EMPTY");
 		double result = serv.binaryFindMedian(nums1, nums2);
 		assertEquals(0.0, result, "0.0 expected");
 	}
