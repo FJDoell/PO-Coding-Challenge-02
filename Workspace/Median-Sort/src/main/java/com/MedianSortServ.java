@@ -65,13 +65,19 @@ public class MedianSortServ {
 		if(arr2.length == 0)
 			return findMedian(arr1);
 		
+		if(arr1.length < arr2.length) {
+			int[] arrSwap = arr2;
+			arr2 = arr1;
+			arr1 = arr2;
+		}
+		
 		double result = 0.0;
 		
 		int combinedLength = arr1.length + arr2.length;
 		int onEachSide = (int) Math.floor(combinedLength / 2.0);
 
 		int arr1LeftPartIndex = onEachSide - 1;
-		int arr2LeftPartIndex = onEachSide - arr1LeftPartIndex - 1;
+		int arr2LeftPartIndex = onEachSide - arr1LeftPartIndex - 2;
 		int arr1Next = 0;
 		int arr2Next = 0;
 		boolean partitionFound = false;
@@ -83,24 +89,24 @@ public class MedianSortServ {
 				arr1Next = getIndexVal(arr1, arr1LeftPartIndex+1);
 				arr2Next = getIndexVal(arr2, arr2LeftPartIndex+1);
 
-				// Check if it's safe to get the current indexes with current range
+				// Did we find the median?
+				if(getIndexVal(arr1, arr1LeftPartIndex) <= arr2Next && getIndexVal(arr2, arr2LeftPartIndex) <= arr1Next) {
+					partitionFound = true;
+					result = (double)
+							(Math.max(getIndexVal(arr1, arr1LeftPartIndex), getIndexVal(arr2, arr2LeftPartIndex))
+							+ Math.min(arr1Next, arr2Next)) / 2.0;
+					return result;
+				}
 				
 				// Update left partition if necessary
-				if(getIndexVal(arr1, arr1LeftPartIndex) > arr2Next) {
+				else if(getIndexVal(arr1, arr1LeftPartIndex) > arr2Next) {
 					arr1LeftPartIndex--;
 					// Update the other partition.
-					arr2LeftPartIndex = onEachSide - arr1LeftPartIndex - 1;
+					arr2LeftPartIndex = onEachSide - arr1LeftPartIndex - 2;
 				} else if(getIndexVal(arr2, arr2LeftPartIndex) > arr1Next) {
 					arr1LeftPartIndex++;
 					// Update the other partition.
-					arr2LeftPartIndex = onEachSide - arr1LeftPartIndex - 1;
-				}
-				
-				// Check if we found the median
-				else if(getIndexVal(arr1, arr1LeftPartIndex) <= arr2Next && getIndexVal(arr2, arr2LeftPartIndex) <= arr1Next) {
-					partitionFound = true;
-					result = (getIndexVal(arr1, arr1LeftPartIndex) + getIndexVal(arr2, arr2LeftPartIndex)) / 2.0;
-					return result;
+					arr2LeftPartIndex = onEachSide - arr1LeftPartIndex - 2;
 				}
 			}
 		}
