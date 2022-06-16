@@ -61,6 +61,15 @@ class MedianSortTest {
 		assertEquals(0.0, result, "0.0 expected");
 	}
 	
+	@Test
+	void testTwoOnes() {
+		int[] nums1 = {1};
+		int[] nums2 = {1};
+
+		double result = serv.findMedian(nums1, nums2);
+		assertEquals(1.0, result, "1.0 expected");
+	}
+	
 	// *******************
 	// BINARY METHOD TESTS
 	// *******************
@@ -76,8 +85,8 @@ class MedianSortTest {
 	
 	@Test
 	void testBinaryTwo() {
-		int[] nums1 = {1, 2};
-		int[] nums2 = {3, 4};
+		int[] nums2 = {1, 2};
+		int[] nums1 = {3, 4};
 
 		double result = serv.binaryFindMedian(nums1, nums2);
 		
@@ -115,6 +124,15 @@ class MedianSortTest {
 
 		double result = serv.binaryFindMedian(nums1, nums2);
 		assertEquals(0.0, result, "0.0 expected");
+	}
+	
+	@Test
+	void testBinaryTwoOnes() {
+		int[] nums1 = {1};
+		int[] nums2 = {1};
+
+		double result = serv.binaryFindMedian(nums1, nums2);
+		assertEquals(1.0, result, "1.0 expected");
 	}
 	
 	// ******************

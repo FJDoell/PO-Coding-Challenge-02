@@ -12,6 +12,12 @@ public class MedianSortServ {
 	
 	public double findMedian(int[] arr1, int[] arr2) {
 		double result = 0.0;
+        if(arr1.length == 0 && arr2.length == 0)
+			return 0.0;
+		if(arr1.length == 0)
+			return findMedian(arr2);
+		if(arr2.length == 0)
+			return findMedian(arr1);
 		
 		int combinedLength = arr1.length + arr2.length;
 		
@@ -19,7 +25,7 @@ public class MedianSortServ {
 		
 		int indexArr1 = 0;
 		int indexArr2 = 0;
-		for(int i = 0; i < combinedLength - 1; i++) {
+		for(int i = 0; i <= combinedLength - 1; i++) {
 			if(indexArr2 == arr2.length) {
 				combinedArr[i] = arr1[indexArr1];
 				indexArr1++;
@@ -34,21 +40,15 @@ public class MedianSortServ {
 				indexArr2++;
 			}
 			
-//			System.out.println(Math.floor((double) (combinedLength / 2.0)));
-//			System.out.println(combinedArr[i]);
 			if(i == Math.floor((double) (combinedLength / 2.0))) {
 				if(combinedLength % 2 == 0) {
 					// Even handler
-					// number between latest two elements
-//					System.out.println("even length");
 					int latest = combinedArr[i];
 					int prev = combinedArr[i-1];
 					result = (latest + prev) / 2.0;
 					break;
 				} else {
 					// Odd handler
-					// latest element in result
-//					System.out.println("odd length");
 					result = combinedArr[i];
 					break;
 				}
