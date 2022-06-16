@@ -40,7 +40,7 @@ public class MedianSortServ {
 				if(combinedLength % 2 == 0) {
 					// Even handler
 					// number between latest two elements
-					System.out.println("even length");
+//					System.out.println("even length");
 					int latest = combinedArr[i];
 					int prev = combinedArr[i-1];
 					result = (latest + prev) / 2.0;
@@ -48,13 +48,114 @@ public class MedianSortServ {
 				} else {
 					// Odd handler
 					// latest element in result
-					System.out.println("odd length");
+//					System.out.println("odd length");
 					result = combinedArr[i];
 					break;
 				}
 			}
 		}
 		return result;
+	}
+	
+	public double binaryFindMedian(int[] arr1, int[] arr2) {
+		if(arr1.length == 0 && arr2.length == 0)
+			return 0.0;
+		if(arr1.length == 0)
+			return findMedian(arr2);
+		if(arr2.length == 0)
+			return findMedian(arr1);
+		
+		double result = 0.0;
+		
+		int combinedLength = arr1.length + arr2.length;
+		int onEachSide = (int) Math.floor(combinedLength / 2.0);
+
+		int arr1LeftPartIndex = onEachSide - 1;
+		int arr2LeftPartIndex = onEachSide - arr1LeftPartIndex - 1;
+		int arr1Next = 0;
+		int arr2Next = 0;
+		boolean partitionFound = false;
+		
+		if(combinedLength % 2 == 0) {
+			// even case
+			while(!partitionFound) {
+				// 'Infinity' values to handle out of range values.
+				arr1Next = getIndexVal(arr1, arr1LeftPartIndex+1);
+				arr2Next = getIndexVal(arr2, arr2LeftPartIndex+1);
+
+				// Check if it's safe to get the current indexes with current range
+				
+				// Update left partition if necessary
+				if(getIndexVal(arr1, arr1LeftPartIndex) > arr2Next) {
+					arr1LeftPartIndex--;
+					// Update the other partition.
+					arr2LeftPartIndex = onEachSide - arr1LeftPartIndex - 1;
+				} else if(getIndexVal(arr2, arr2LeftPartIndex) > arr1Next) {
+					arr1LeftPartIndex++;
+					// Update the other partition.
+					arr2LeftPartIndex = onEachSide - arr1LeftPartIndex - 1;
+				}
+				
+				// Check if we found the median
+				else if(getIndexVal(arr1, arr1LeftPartIndex) <= arr2Next && getIndexVal(arr2, arr2LeftPartIndex) <= arr1Next) {
+					partitionFound = true;
+					result = (getIndexVal(arr1, arr1LeftPartIndex) + getIndexVal(arr2, arr2LeftPartIndex)) / 2.0;
+					return result;
+				}
+			}
+		}
+		// odd case
+		arr2LeftPartIndex = onEachSide - arr1LeftPartIndex;
+		while(!partitionFound) {
+			// 'Infinity' values to handle out of range values.
+			arr1Next = getIndexVal(arr1, arr1LeftPartIndex+1);
+			arr2Next = getIndexVal(arr2, arr2LeftPartIndex+1);
+			
+			// Update left partition if necessary
+			if(getIndexVal(arr1, arr1LeftPartIndex) > arr2Next) {
+				System.out.println(getIndexVal(arr1, arr1LeftPartIndex) + " greater than " + arr2Next + ", moving back");
+				arr1LeftPartIndex--;
+				// Update the other partition.
+				arr2LeftPartIndex = onEachSide - arr1LeftPartIndex - 1;
+			} else if(getIndexVal(arr2, arr2LeftPartIndex) > arr1Next) {
+				System.out.println(getIndexVal(arr2, arr2LeftPartIndex) + " greater than " + arr1Next + ", moving forward");
+				arr1LeftPartIndex++;
+				// Update the other partition.
+				arr2LeftPartIndex = onEachSide - arr1LeftPartIndex - 1;
+			}
+			
+			// Check if we found the median
+			else if(getIndexVal(arr1, arr1LeftPartIndex) <= arr2Next && getIndexVal(arr2, arr2LeftPartIndex) <= arr1Next) {
+				System.out.println("Median found!");
+				partitionFound = true;
+				result = Math.min(getIndexVal(arr1, arr1LeftPartIndex), getIndexVal(arr2, arr2LeftPartIndex));
+				return result;
+			}
+		}
+		return result;
+	}
+	
+	public double findMedian(int[] arr) {
+		double result = 0.0;
+		if(arr.length == 0)
+			return result;
+		
+		int onEachSide = (int) Math.floor(arr.length / 2.0);
+		if(arr.length % 2 == 0) {
+			// even case
+			result = (double) (arr[onEachSide-1] + arr[onEachSide]) / 2;
+			return result;
+		}
+		// odd case
+		return arr[onEachSide];
+	}
+	
+	public int getIndexVal(int[] arr, int index) {
+		if(index > arr.length - 1)
+			return Integer.MAX_VALUE;
+		if(index < 0)
+			return Integer.MIN_VALUE;
+		return arr[index];
 	}
 
 }
